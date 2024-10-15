@@ -2,95 +2,70 @@
 const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
 // Collect employee data
-const collectEmployees = function() 
-{
-  // TODO: Get user input to create and return an array of employee objects
-  const employees = [];
+const collectEmployees = function() {
+  const employees = []; // Initialize an array to hold employee objects
   
-  let addMore = true;
+  let addMore = true; // Boolean to control the loop for collecting multiple employees
 
-  while (addMore) 
-    {
-        // get employee info using prompt
-        const firstName = prompt("Enter the employee's first name:");
-        const lastName = prompt("Enter the employee's last name:");
-        let salary = prompt("Enter the employee's salary:");
+  while (addMore) {
+    // Collect employee details using prompt
+    const firstName = prompt("Enter the employee's first name:");
+    const lastName = prompt("Enter the employee's last name:");
+    let salary = prompt("Enter the employee's salary:");
 
-        // validate and convert salary to a number with money
-        salary = parseFloat(salary);
-        if (isNaN(salary)) 
-            {
-                alert("Invalid salary input.  Please enter a correct value.");
-                continue;
-            }
-
-            // create a new employee
-            const employee = 
-            {
-                firstName: firstName,
-                lastName: lastName,
-                salary: salary
-            };
-            employees.push(employee);
-            addMore = confirm("Do you want to add another employee?");
+    // Validate and convert salary to a number
+    salary = parseFloat(salary);
+    if (isNaN(salary)) {
+      alert("Invalid salary input. Please enter a numeric value.");
+      continue; // Restart the loop to recollect employee data
     }
 
-    employees.sort(function(a, b)
-  {
-    if (a.lastName < b.lastName)
-      {
-        return -1;
-      }
-      else if (a.lastName > b.lastName)
-        {
-          return 1;
-        }
-      else
-      {
-        if (a.firstName < b.firstName) 
-          {
-            return -1;
-          }
-        else if (a.firstName > b.firstName) 
-          {
-            return 1;
-          }
-        else 
-        {
-          return 0;
-        }
-      }
-  });
-  
-    return employees;  //return the employee array
+    // Create a new employee object
+    const employee = {
+      firstName: firstName,
+      lastName: lastName,
+      salary: salary
+    };
+
+    // Add the employee object to the array
+    employees.push(employee);
+
+    // Ask if the user wants to add another employee
+    addMore = confirm("Do you want to add another employee?");
+  }
+
+  return employees; // Return the array of employee objects
 }
 
 // Display the average salary
-const displayAverageSalary = function(employeesArray) 
-{
-  // TODO: Calculate and display the average salary
-if (employeesArray.length === 0) 
-  {
+const displayAverageSalary = function(employeesArray) {
+  if (employeesArray.length === 0) {
     console.log("No employees to calculate the average salary.");
     return;
   }
 
+  // Calculate the total salary
   const totalSalary = employeesArray.reduce((sum, employee) => sum + employee.salary, 0);
+
+  // Calculate the average salary
   const averageSalary = totalSalary / employeesArray.length;
+
+  // Format the average salary to two decimal places
   const formattedAverageSalary = averageSalary.toFixed(2);
-  
-  console.log(`The average employee salary between out ${employeesArray.length} employee(s) is $${formattedAverageSalary}`);
+
+  // Log the message with the number of employees and the formatted average salary
+  console.log(`The average employee salary between our ${employeesArray.length} employee(s) is $${formattedAverageSalary}`);
 }
 
 // Select a random employee
 const getRandomEmployee = function(employeesArray) 
 {
-  // TODO: Select and display a random employee
   const randomIndex = Math.floor(Math.random() * employeesArray.length);
   const randomEmployee = employeesArray[randomIndex];
   if (employeesArray.length >= 1)
     {
       alert(`Congratulations to ${randomEmployee.firstName} ${randomEmployee.lastName}, our random drawing winner!`);
+      console.log(`Congratulations to ${randomEmployee.firstName} ${randomEmployee.lastName}, our random drawing winner!`);
     }
 }
 
